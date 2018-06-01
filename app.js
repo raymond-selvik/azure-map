@@ -95,7 +95,15 @@ app.get('/', async (req, res) => {
     var cor = await queryCollection(mapList);
     console.log(mapList);    
 
-    res.sendFile(__dirname + '/public/index.html');
+    var dataToSend = {'data' : [ [ 60.397076, 5.324383 ],
+    [ 59.911491, 10.757933 ],
+    [ 58.14671, 7.9956 ],
+    [ 51.509865, -0.118092 ] ]};
+   
+    var data = JSON.stringify(dataToSend);
+   
+    res.render('map', { "data" : data});
+   // res.sendFile(__dirname + '/public/index.html');
 
 });
 

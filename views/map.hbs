@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <title>{{mapList}}</title>
+    <title>{{data}}</title>
 
     <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/css/atlas.min.css?api-version=1.0" type="text/css" />
     <script src="https://atlas.microsoft.com/sdk/js/atlas.min.js?api-version=1.0"></script>
@@ -186,6 +186,8 @@
         </div>
         <ul id="search-info"></ul>
     </div>
+    
+    <div id="mapList">{{data}}</div>
 
     <div id="map"></div>
 
@@ -199,14 +201,21 @@
 
  
 
+
+    //var datadata = JSON.parse({{{data}}});
+    var datadata = {{{data}}}
+    alert(datadata.data)
+ 
+
     var line = new atlas.data.Feature(
-        new atlas.data.LineString($(this).attr('lines')),
+        new atlas.data.LineString(datadata.data),
         {
             width: 4,
             color: "black",
         }
     );
 
+   
     /* Add the line to the map*/
     map.addLinestrings([line], {
         name: "line-layer",
@@ -214,6 +223,7 @@
         join: "round",
         overwrite: true
     });
+
 
 
 
