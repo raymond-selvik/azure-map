@@ -37,7 +37,10 @@ function getDatabase() {
 }
 
 // ADD THIS PART TO YOUR COE
-    function queryCollection() {
+
+
+
+    function queryCollection(mapList) {
         console.log(`Querying collection through index:\nsekken`);
     
         return new Promise((resolve, reject) => {
@@ -48,7 +51,7 @@ function getDatabase() {
                 if (err) reject(err)
                 else {
                     for (var queryResult of results) {
-                        //mapList.push(queryResult);
+                        mapList.push(queryResult);
                         let resultString = JSON.stringify(queryResult);
                         console.log(`\tQuery returned ${resultString}`);
                     }
@@ -58,6 +61,8 @@ function getDatabase() {
             });
         });
     };
+
+
 
 
 
@@ -72,7 +77,7 @@ function exit(message) {
 getDatabase()
 .then(() => { exit(`Completed successfully`); })
 .catch((error) => { exit(`Completed with error ${JSON.stringify(error)}`) })
-.then(() => queryCollection());
+
 
 
 
@@ -85,14 +90,13 @@ hbs.registerHelper('getGpsData', () => {
     return [[60.397076,5.324383], [51.509865,-0.118092]];
 })
 
-app.get('/', (req, res) => {
-    var mapList1 = [[51.509865,-0.118092], [58.14671,7.9956]];
+app.get('/', async (req, res) => {
+    var mapList = [];
+    var cor = await queryCollection(mapList);
+    console.log(mapList);    
 
+    res.sendFile(__dirname + '/public/index.html');
 
-
-    res.render('map', {
-        mapList: [[51.509865,-0.118092], [58.14671,7.9956]]
-    });
 });
 
 app.listen(3000, () => {
